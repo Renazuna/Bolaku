@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    margin: 0; /* Menghilangkan margin agar konten lebih dekat ke tepi */
+    padding: 0; /* Menghilangkan padding agar konten lebih dekat ke tepi */
+}
+
+#radarChart {
+    width: 80%; /* Mengubah lebar chart menjadi 80% dari lebar layar */
+    height: auto; /* Mengubah tinggi chart agar menyesuaikan lebar yang telah ditentukan */
+    margin-top: 20px; /* Mengurangi jarak atas chart dari konten di atasnya */
+    margin-bottom: 20px; /* Mengurangi jarak bawah chart dari konten di bawahnya */
+}
