@@ -3,7 +3,8 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$OPENAI_API_KEY = 'sk-proj-Rg1pVzwaareVnTAlkmzUT3BlbkFJ1M9YMNw2utj1DHpePmTH'; // Replace with your actual OpenAI API key
+$config = include 'config.php';
+$OPENAI_API_KEY = $config['OPENAI_API_KEY'];
 
 $response = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -98,31 +99,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .sidebar ul {
-    list-style: none;
-    padding: 0;
-}
+            list-style: none;
+            padding: 0;
+        }
 
-.sidebar ul li {
-    padding: 15px 20px;
-    border-bottom: 1px solid #444; /* Garis batas antara setiap menu */
-    text-align: center; /* Teks diatur ke tengah */
-}
+        .sidebar ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #444; /* Garis batas antara setiap menu */
+            text-align: center; /* Teks diatur ke tengah */
+        }
 
-.sidebar ul li:last-child {
-    border-bottom: none; /* Menghilangkan border bawah pada item terakhir */
-}
+        .sidebar ul li:last-child {
+            border-bottom: none; /* Menghilangkan border bawah pada item terakhir */
+        }
 
-.sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block; /* Membuat link menjadi blok agar border dan padding bisa diterapkan */
-    transition: background-color 0.3s ease; /* Transisi untuk background-color selama 0.3 detik */
-}
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block; /* Membuat link menjadi blok agar border dan padding bisa diterapkan */
+            transition: background-color 0.3s ease; /* Transisi untuk background-color selama 0.3 detik */
+        }
 
-.sidebar ul li a:hover {
-    background-color: #555; /* Warna latar belakang saat tombol dihover */
-}
-
+        .sidebar ul li a:hover {
+            background-color: #555; /* Warna latar belakang saat tombol dihover */
+        }
 
         .content {
             margin-left: 240px;
@@ -137,15 +137,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
         }
 
-
-
         .chat-container h2 {
-    margin: 0;
-    margin-bottom: 40px; /* Menambahkan ruang tambahan di bawah judul */
-    color: #00ff00; /* Green color */
-    font-size: 50px; /* Menambahkan properti font-size */
-}
-
+            margin: 0;
+            margin-bottom: 40px; /* Menambahkan ruang tambahan di bawah judul */
+            color: #00ff00; /* Green color */
+            font-size: 50px; /* Menambahkan properti font-size */
+        }
 
         .chat-messages {
             overflow-y: auto;
@@ -163,8 +160,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .user-message p {
             color: white; 
             font-size: 40px; /* Menambahkan properti font-size */
-
-
         }
 
         .assistant-message p {
@@ -191,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="submit"]:hover {
             background-color: #00ff00;
         }
-        
+
     </style>
 </head>
 <body>
@@ -208,22 +203,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="content">
         <div class="chat-container">
             <h2>ChatBot Bolaku</h2>
+        </div>
+        <div class="chat">
+            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($userPrompt)): ?>
+                <div class="user-message">
+                    <p><?= htmlspecialchars($userPrompt, ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+                <div class="assistant-message">
+                    <p><?= htmlspecialchars($response, ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+            <?php endif; ?>
+        </div>
+        <form id="chat-form" method="post" action="">
+            <label for="prompt">Kirim Pesan:</label><br>
+            <textarea name="prompt" id="prompt" rows="4" cols="50"></textarea><br>
+            <input type="submit" name="submit" value="Send">
+        </form>
+        <br>
     </div>
-    <div class="chat">
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($userPrompt)): ?>
-        <div class="user-message">
-            <p><?= htmlspecialchars($userPrompt, ENT_QUOTES, 'UTF-8') ?></p>
-        </div>
-        <div class="assistant-message">
-            <p><?= htmlspecialchars($response, ENT_QUOTES, 'UTF-8') ?></p>
-        </div>
-    <?php endif; ?>
-</div>
-<form id="chat-form" method="post" action="">
-    <label for="prompt">Kirim Pesan:</label><br>
-    <textarea name="prompt" id="prompt" rows="4" cols="50"></textarea><br>
-    <input type="submit" name="submit" value="Send">
-</form>
-<br>
 </body>
 </html>
